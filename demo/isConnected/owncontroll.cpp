@@ -8,11 +8,33 @@
 #define Sleep(a) usleep((a)*1000)
 #endif
 
+// Typical workflow:
+// if( hasWheel() < 0 )
+// {
+// 	return -1;
+// }
+// int wheelID = -1;
+// if( get_wheel_id() < 0)
+// {
+// 	return wheelID;
+// }
+// int slotNum = -1;
+// if( get_slot_number(wheelID) < 0 )
+// {
+// 	return slotNum;
+// }
+// if (set_position(wheelID, slotNum - 1))
+// {
+// 	std::cout << " can not set " << std::endl;
+// }
+
+// tells if we have a wheel attached, less than 0 if not.
 int has_wheel()
 {
 	return EFWGetNum();
 }
 
+// returns the id of the first attached wheel, less than 0 if none attached.
 int get_wheel_id()
 {
 	int EFW_count = has_wheel();
@@ -30,6 +52,7 @@ int get_wheel_id()
 	return index;
 }
 
+// generates id of the selected index, less than 0 if error
 int get_selected_id(int index)
 {
 	int iSelectedID;
@@ -48,6 +71,7 @@ int get_selected_id(int index)
 	return iSelectedID;
 }
 
+// gets the number of available slots, less than 0 if error, slots can be indexd from 0 to n-1
 int get_slot_number(int index)
 {
 	int iSelectedID = get_selected_id(index);
@@ -68,6 +92,7 @@ int get_slot_number(int index)
 	return EFWInfo.slotNum;
 }
 
+// gets current position
 int get_position(int index)
 {
 	int iSelectedID = get_selected_id(index);
@@ -89,7 +114,7 @@ int get_position(int index)
 	return currentSlot;
 }
 
-
+// sets position
 int set_position(int index, int targetSlot)
 {
 	int iSelectedID = get_selected_id(index);
